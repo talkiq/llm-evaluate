@@ -1,0 +1,16 @@
+# List the mapping for model-type and model loader class
+DefaultParser:
+  filename: default_parser.py
+  is_extension: False
+
+DefaultReferenceSplitParser:
+  filename: default_reference_split_parser.py
+  is_extension: False
+
+JsonReferenceSplitParser:
+  filename: json_reference_split_parser.py
+  is_extension: False
+
+KeywordParser:
+  filename: keyword_parser.py
+  is_extension: False

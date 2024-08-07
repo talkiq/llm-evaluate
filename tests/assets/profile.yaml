@@ -1,0 +1,203 @@
+model:
+  model: t5-small
+  model_type: hf-automodel
+  tokenizer_args:
+    model_max_length: 3000
+    truncation_side: right
+    truncation: longest_first
+  model_load_args:
+    task_type: T5ForConditionalGeneration
+    device_map: cpu
+    max_input_tokens: 3000
+    torch_dtype: auto
+  model_inference_args:
+    max_new_tokens: 512
+    num_beams: 2
+    temperature: 1.0
+  add_to_prompt_start: '[Prompt]'
+  add_to_prompt_end: '[Response]'
+
+benchmarks:
+  internal:
+    action_items:
+      tasks:
+        action_items:
+          metrics:
+          - rouge
+      prompt: |
+        List all the action items. An action item is a one sentence summary of an
+        activity which should occur after a conversation has ended. Action items
+        should never include activities which have already occurred. Leave an
+        empty list if no action items are present.
+
+datasets:
+  single_task:
+    tasks:
+      random-generation:
+        task_type: generation
+    column_input: prompt
+    description: Dataset for random generative tasks (single)
+    metadata:
+      source: local
+      version: 0
+      data:
+      - prompt: How to get to Vancouver from Seattle?
+      - prompt: Generate 3 male names in a list.
+      - prompt: Convert 4.33 x 10 to scientific notation.
+
+  single_task_numeric:
+    tasks:
+      random:
+        task_type: classification
+        model_output_parser: KeywordParser
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (numeric reference)
+    metadata:
+      source: local
+      version: 0
+      data:
+      - prompt: 1 + 1 = ?
+        response: 2
+      - prompt: 2 + 2 = ?
+        response: 4
+      - prompt: 1 + 2 = ?
+        response: 3
+
+  multiple_tasks:
+    tasks:
+      random-generation-prompts:
+        task_type: generation
+        key: 1
+      random-classification-prompts:
+        task_type: classification
+        key: 2
+        model_output_parser: KeywordParser
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (multiple)
+    reference_split_parser: JsonReferenceSplitParser
+    metadata:
+      source: local
+      version: 0
+      data:
+      - prompt: |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. How to get to Vancouver from Seattle?
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Seattle and Vancouver are very similar cities."
+        response: '{"1": "2 hours and 30 minutes", "2": "Neutral"}'
+      - prompt:  |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. Generate 3 male names and provide each name's etymology.
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Not every car is built the same."
+        response: '{"1": "No idea", "2": "Neutral"}'
+      - prompt: |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. Convert 4.33 x 10 to scientific notation.
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Seven is a lucky number."
+        response: '{"1": "Something", "2": "Positive"}'
+
+  single_task_multi_y:
+    tasks:
+      random-classification:
+        task_type: classification
+        multi_y: True
+        model_output_parser: KeywordParser
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (single task, multiple labels)
+    metadata:
+      source: local
+      version: 0
+      data:
+      - prompt: Give the names of 3 biggest cities in Canada.
+        response:
+        - Toronto
+        - Vancouver
+        - Montreal
+      - prompt: Name the biggest city in Canada.
+        response: Toronto
+      - prompt: Name the 2 biggest cities in British Columbia, Canada.
+        response:
+        - Vancouver
+        - Victoria
+      - prompt: Name the capital city of British Columbia, Canada.
+        response:
+        - Victoria
+
+  multiple_tasks_multiple_responses:
+    tasks:
+      random-generation-prompts:
+        task_type: generation
+        key: 1
+      random-classification-prompts:
+        task_type: classification
+        key: 2
+        model_output_parser: KeywordParser
+        labels:
+        - Positive
+        - Negative
+        - Neutral
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (multiple)
+    reference_split_parser: JsonReferenceSplitParser
+    metadata:
+      source: local
+      version: 0
+      data:
+      - prompt: |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. How to get to Vancouver from Seattle?
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Seattle and Vancouver are very similar cities."
+        response:
+          1: 2 hours and 30 minutes
+          2: Neutral
+      - prompt:  |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. Generate 3 male names and provide each name's etymology.
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Not every car is built the same."
+        response: '{"1": "No idea", "2": "Neutral"}'
+      - prompt: |
+          Provide responses to the following questions in JSON with the key as the question number.
+          1. Convert 4.33 x 10 to scientific notation.
+          2. Classifiy the sentiment of the following statement into positive, negative or neutral.
+            "Seven is a lucky number."
+        response: '{"1": "Something", "2": "Positive"}'
+
+parsers:
+  DefaultParser:
+    filename: default_parser.py
+    is_extension: False
+
+  DefaultReferenceSplitParser:
+    filename: default_reference_split_parser.py
+    is_extension: False
+
+  JsonReferenceSplitParser:
+    filename: json_reference_split_parser.py
+    is_extension: False
+
+  KeywordParser:
+    filename: keyword_parser.py
+    is_extension: False
+
+metrics:
+  NewMetric:
+    filename: new_metric.py
+
+model_loaders:
+  hf-automodel:
+    classname: AutoClassModel
+    filename: autoclass_model.py
+    is_extension: False
+
+  hf-pipeline:
+    classname: PipelineModel
+    filename: pipeline_model.py
+    is_extension: False

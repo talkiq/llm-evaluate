@@ -1,0 +1,111 @@
+# defaults are from voiceai/nlp/llm_evaluate/configs/*.yaml
+defaults:
+- configs@benchmarks: benchmarks
+- configs@datasets: datasets
+- configs@extensions: extensions
+- configs@metrics: metrics
+- configs@model: model
+- configs@model_loaders: model_loaders
+- configs@parsers: parsers
+- _self_
+
+
+datasets:
+  demo-chat:
+    tasks:
+      random-questions:
+        task_type: generation
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (single)
+    metadata:
+      source: local
+      data:
+      - prompt: How to get to Vancouver from Seattle?
+        response: Take a plane, bus, train or car.
+      - prompt: Generate 3 male names in a list.
+        response: One, Two, Three
+      - prompt: Convert 4.33 x 10 to scientific notation.
+        response: 4.33e2
+
+  demo-classification:
+    tasks:
+      random-mcq:
+        task_type: classification
+        model_output_parser: KeywordParser
+        labels:
+        - A
+        - B
+        - C
+        - D
+        - E
+        none_value: E
+    column_input: prompt
+    column_reference: response
+    description: Dataset for random generative tasks (numeric reference)
+    metadata:
+      source: local
+      data:
+      - prompt: |
+          Pick the correct answer for the following question:
+          1 + 1 = ?
+          A. 0
+          B. 1
+          C. 2
+          D. 3
+        response: C
+      - prompt: |
+          Answer the following multiple choice question:
+          2 + 2 = ?
+          A. 1
+          B. 2
+          C. 3
+          D. 4
+        response: D
+      - prompt: |
+          Select the correct response for the following multiple choice question:
+          1 + 2 = ?
+          A. 1
+          B. 2
+          C. 3
+          D. 4
+        response: C
+
+
+benchmarks:
+  demo:
+    demo-chat:
+      tasks:
+        random-questions:
+          metrics:
+          - rouge
+      prompt: Answer the following question as concisely as possible.
+
+    demo-classification:
+      tasks:
+        random-mcq:
+          metrics:
+          - accuracy
+          - precision
+          - f1
+          - recall
+
+
+model:
+  model: google/t5-efficient-tiny
+  model_type: hf-automodel
+  tokenizer_args:
+    model_max_length: 3000
+    truncation_side: right
+    truncation: longest_first
+  model_load_args:
+    task_type: T5ForConditionalGeneration
+    device_map: cpu
+    max_input_tokens: 3000
+    torch_dtype: auto
+  model_inference_args:
+    max_new_tokens: 512
+    num_beams: 2
+    do_sample: False
+  add_to_prompt_start: '[Prompt]'
+  add_to_prompt_end: '[Response]'

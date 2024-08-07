@@ -1,0 +1,26 @@
+demo:
+  demo-chat:
+    tasks:
+      random-questions:
+        metrics:
+        - rouge
+    prompt: Answer the following question as concisely as possible.
+
+  demo-classification:
+    tasks:
+      random-mcq:
+        metrics:
+        - accuracy
+        - precision
+        - f1
+        - recall
+
+runtime-measurements:
+  # TODO: Currently, stats endpoints only takes one dataset
+  demo-random-generation:
+    prompt: |
+      Answer the following questions as verbosely as possible.
+    tasks:
+      random-generation-prompts:
+        metrics:
+        - rouge

@@ -1,0 +1,28 @@
+# defaults are from voiceai/nlp/llm_evaluate/configs/*.yaml
+defaults:
+- configs@benchmarks: benchmarks
+- configs@datasets: datasets
+- configs@extensions: extensions
+- configs@metrics: metrics
+- configs@model_loaders: model_loaders
+- configs@parsers: parsers
+- _self_
+
+model:
+  model: google/t5-efficient-tiny
+  model_type: hf-automodel
+  tokenizer_args:
+    model_max_length: 3000
+    truncation_side: right
+    truncation: longest_first
+  model_load_args:
+    task_type: T5ForConditionalGeneration
+    device_map: cpu
+    max_input_tokens: 3000
+    torch_dtype: auto
+  model_inference_args:
+    max_new_tokens: 512
+    num_beams: 2
+    do_sample: False
+  add_to_prompt_start: '[Prompt]'
+  add_to_prompt_end: '[Response]'

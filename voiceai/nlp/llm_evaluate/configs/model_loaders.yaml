@@ -1,0 +1,55 @@
+# List the mapping for model-type and model loader class
+hf-automodel:
+  classname: AutoClassModel
+  filename: autoclass_model.py
+  is_extension: False
+
+hf-automodel-seqcls:
+  classname: SequenceClassificationAutoClassModel
+  filename: seq_cls_autoclass_model.py
+  is_extension: False
+
+hf-pipeline:
+  classname: PipelineModel
+  filename: pipeline_model.py
+  is_extension: False
+
+anthropic:
+  classname: AnthropicModel
+  filename: anthropic_model.py
+  is_extension: False
+
+gcp:
+  classname: GCPModel
+  filename: gcp_model.py
+  is_extension: False
+
+openai:
+  classname: OpenAIModel
+  filename: openai_model.py
+  is_extension: False
+
+llama-cpp:
+  classname: LlamaCpp
+  filename: llama_cpp.py
+  is_extension: False
+
+llama-cpp-server:
+  classname: LlamaCppServer
+  filename: llama_cpp_server.py
+  is_extension: False
+
+llama-gptq:
+  classname: LlamaGPTQ
+  filename: llama_gptq.py
+  is_extension: False
+
+peft:
+  classname: PeftModel
+  filename: peft_model.py
+  is_extension: False
+
+sparsegpt:
+  classname: SparseGptModel
+  filename: sparsegpt_model.py
+  is_extension: False

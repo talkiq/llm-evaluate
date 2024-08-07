@@ -1,0 +1,108 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+    -   id: check-case-conflict
+    -   id: check-executables-have-shebangs
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: check-shebang-scripts-are-executable
+    -   id: check-symlinks
+    -   id: check-toml
+    -   id: check-vcs-permalinks
+    -   id: check-xml
+    -   id: check-yaml
+        args: [--allow-multiple-documents]
+    -   id: detect-private-key
+    -   id: end-of-file-fixer
+    -   id: mixed-line-ending
+        args: [--fix=lf]
+    -   id: trailing-whitespace
+
+# python
+    -   id: check-ast
+    -   id: check-builtin-literals
+    -   id: check-docstring-first
+    -   id: debug-statements
+    -   id: double-quote-string-fixer
+    -   id: name-tests-test
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/pycqa/pylint
+    rev: v3.2.5
+    hooks:
+    -   id: pylint
+        args:
+        - --jobs=0  # parallelize
+        - --max-args=10
+        - --score=n
+        - -d broad-except
+        - -d duplicate-code
+        - -d fixme
+        - -d import-error
+        - -d invalid-name
+        - -d locally-disabled
+        - -d missing-docstring
+        - -d no-name-in-module
+        - -d too-few-public-methods
+        - -d too-many-arguments
+        - -d too-many-boolean-expressions
+        - -d too-many-branches
+        - -d too-many-instance-attributes
+        - -d too-many-locals
+        - -d too-many-return-statements
+        - -d too-many-statements
+        - -d ungrouped-imports  # conflicts with reorder-python-imports
+        - -d wrong-import-order  # conflicts with reorder-python-imports
+-   repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.5
+    hooks:
+    -   id: remove-crlf
+    # -   id: remove-tabs  # TODO: replace tabs in **/regexes.py
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.13.0
+    hooks:
+    -   id: reorder-python-imports
+        args: [--py36-plus]
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.16.0
+    hooks:
+    -   id: pyupgrade
+        args: [--py36-plus]
+-   repo: https://github.com/asottile/yesqa
+    rev: v1.5.0
+    hooks:
+    -   id: yesqa
+-   repo: local
+    hooks:
+    -   id: pytest-fixture-require-scope
+        name: Require explicit scope for pytest fixtures
+        description: 'Ensure we explicitly set pytest fixture scopes'
+        entry: '@pytest\.fixture( |\n|(\(\)))'
+        language: pygrep
+        types: [python]
+-   repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+    -   id: python-no-eval
+    -   id: python-no-log-warn
+    -   id: python-use-type-annotations
+
+# rst
+    -   id: rst-backticks
+    -   id: rst-directive-colons
+    -   id: rst-inline-touching-normal
+
+# shell
+-   repo: https://github.com/lovesegfault/beautysh
+    rev: v6.2.1
+    hooks:
+    -   id: beautysh
+-   repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
+    hooks:
+    -   id: script-must-not-have-extension
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-markup
+    rev: v1.0.1
+    hooks:
+    -   id: rst-linter
+        exclude: (index.rst|experimental.rst)
