@@ -5,7 +5,45 @@ the tool performs a set of predefined or custom benchmarks and reports results.
 
 ## Installation
 
-TODO: Add install instructions.
+### PyPI Install
+
+The package is available on PyPI can be installed via:
+
+```
+    pip install <INSERT-PACKAGE-NAME>
+```
+
+### Source install
+
+After cloning the repo, the package can be directly installed into the python environment using `pip`:
+
+```console
+    git clone https://github.com/talkiq/llm-evaluate
+    pip install ./llm-evaluate
+```
+
+
+## Quick Start
+
+The package comes with a sample starter template to help get started with the tool quickly.
+
+- A demo configuration with the model definiton [sample_config.yaml](./sample-config.yaml) 
+- A few benchmarks defined in [benchmarks.yaml](./voiceai/nlp/llm_evaluate/configs/benchmarks.yaml)
+- A few demo datasets defined in [datasets.yaml](./voiceai/nlp/llm_evaluate/configs/datasets.yaml) 
+
+Other artifacts are defined in the [configs directory](./voiceai/nlp/llm_evaluate/configs/).
+
+To perform an accuracy benchmark on the model, we can run the following command:
+
+```console
+    llm-evaluate benchmark --benchmarks demo sample_config.yaml
+```
+
+To collect runtime telemetry for the model, we can run the following command:
+
+```console
+    llm-evaluate stats-runtime sample_config.yaml
+```
 
 ## Basic concepts
 
