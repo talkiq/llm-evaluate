@@ -14,7 +14,7 @@ TODO: Add install instructions.
 - `Benchmark`: A collection of datasets, metrics and parsers. A benchmark can be named and reused repeatedly.
 - `Parser`: A function to interpret prompt or LLM responoses before further processing. We have 3 type of parsers:
 
-  - `ReferenceSplitParser`: A parser that can convert multitask prompt responses into individual task references and also apply the same operation on LLM output for that input.
+  - `ReferenceSplitParser`: A parser that can convert multitask prompt responses into individual task references and also apply the same operation on LLM's corresponding output.
   - `TaskReferenceParser`: A parser that can further process individual task references.
   - `ModelOutputParser`: A parser that can process individual model outputs.
 
@@ -53,11 +53,8 @@ Update [configs/default/datasets.yaml](voiceai/nlp/llm_evaluate/configs/default/
 
     - `version`: Version of the dataset.
     - `format`: Currently, `csv`, `jsonl` or `json`.
-    - `source`: One of `dataset-api`, `gcs` or `custom` (for external API hosted datasets)
+    - `source`: One of `local`, `gcs` or `custom` (for external API hosted datasets)
     - `path`: Path for the dataset, for instance, path on cloud storage.
-    - `dataset`: Optional, name for `dataset-api` source datasets.
-    - `task`: Optional, name of the partition for `dataset-api` source datasets.
-    - `disable_compliance`: Optional, boolean flag for disabling compliance feature for `dataset-api` source datasets.
 
 For instance, a entry for a GCS backed dataset (with the input prompt in `prompt` and desired output in `reference` columns) would look something like this:
 

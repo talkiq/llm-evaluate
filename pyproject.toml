@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "voiceai-nlp-llm-evaluate"
-version = "2.9.0"
+version = "0.0.1"
 description = ""
 authors = ["Harsh Saini <harshsaini90@gmail.com>"]
 readme = "README.md"
