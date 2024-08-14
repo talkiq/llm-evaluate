@@ -1,10 +1,13 @@
-from voiceai.nlp.llm_evaluate.datasets import EvaluationDataset
-from voiceai.nlp.llm_evaluate.datasets import load_dataset
-from voiceai.nlp.llm_evaluate.helpers.profile import Profile
-from voiceai.nlp.llm_evaluate.models import Model
+from llm_evaluate.datasets import EvaluationDataset
+from llm_evaluate.datasets import load_dataset
+from llm_evaluate.helpers.configuration_profile import ConfigurationProfile
+from llm_evaluate.models import Model
 
 
-def test_metrics(simple_model: Model, default_profile: Profile) -> None:
+def test_metrics(
+    simple_model: Model,
+    default_profile: ConfigurationProfile,
+) -> None:
     batch_size = 1
     catalog = default_profile.datasets
     assert catalog

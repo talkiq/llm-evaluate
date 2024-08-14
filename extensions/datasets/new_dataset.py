@@ -1,6 +1,7 @@
 import pandas
 
-from voiceai.nlp.llm_evaluate.datasets.custom_dataset import CustomDataset
+from llm_evaluate.datasets.custom_dataset import CustomDataset
+
 
 class NewDataset(CustomDataset):
 
@@ -9,16 +10,16 @@ class NewDataset(CustomDataset):
         return pandas.DataFrame([
             {
                 'prompt': 'How to get to Vancouver from Seattle?',
-                'response': '2 hours and 30 minutes'
+                'response': '2 hours and 30 minutes',
             },
             {
-            'prompt': 'Classifiy the sentiment of the following statement '
-                      'into positive, negative or neutral. '
-                      '"Seattle and Vancouver are very similar cities."',
-            'response': 'neutral'
+                'prompt': 'Classifiy the sentiment of the following statement '
+                'into positive, negative or neutral. '
+                '"Seattle and Vancouver are very similar cities."',
+                'response': 'neutral',
             },
             {
-            'prompt': 'Convert 4.33 x 100 to scientific notation',
-            'response': '4.33e2'
-            }
+                'prompt': 'Convert 4.33 x 100 to scientific notation',
+                'response': '4.33e2',
+            },
         ])

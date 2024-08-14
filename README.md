@@ -5,33 +5,23 @@ the tool performs a set of predefined or custom benchmarks and reports results.
 
 ## Installation
 
-### PyPI Install
+### Install via Pip
 
-The package is available on PyPI can be installed via:
-
-```
-    pip install <INSERT-PACKAGE-NAME>
-```
-
-### Source install
-
-After cloning the repo, the package can be directly installed into the python environment using `pip`:
+The package can be directly installed into the python environment using `pip`:
 
 ```console
-    git clone https://github.com/talkiq/llm-evaluate
-    pip install ./llm-evaluate
+    pip install git+git://github.com/talkiq/llm-evaluate.git
 ```
-
 
 ## Quick Start
 
 The package comes with a sample starter template to help get started with the tool quickly.
 
-- A demo configuration with the model definiton [sample_config.yaml](./sample-config.yaml) 
-- A few benchmarks defined in [benchmarks.yaml](./voiceai/nlp/llm_evaluate/configs/benchmarks.yaml)
-- A few demo datasets defined in [datasets.yaml](./voiceai/nlp/llm_evaluate/configs/datasets.yaml) 
+- A demo configuration with the model definiton [sample_config.yaml](./sample-config.yaml)
+- A few benchmarks defined in [benchmarks.yaml](./llm_evaluate/configs/benchmarks.yaml)
+- A few demo datasets defined in [datasets.yaml](./llm_evaluate/configs/datasets.yaml)
 
-Other artifacts are defined in the [configs directory](./voiceai/nlp/llm_evaluate/configs/).
+Other artifacts are defined in the [configs directory](./llm_evaluate/configs/).
 
 To perform an accuracy benchmark on the model, we can run the following command:
 
@@ -67,7 +57,7 @@ All of the steps below require a package release.
 
 ### Adding a dataset
 
-Update [configs/default/datasets.yaml](voiceai/nlp/llm_evaluate/configs/default/datasets.yaml) with the following:
+Update [configs/default/datasets.yaml](llm_evaluate/configs/default/datasets.yaml) with the following:
 
 - Create a new entry in the dataset list.
 - Fill in the mandatory fields:
@@ -90,7 +80,7 @@ Update [configs/default/datasets.yaml](voiceai/nlp/llm_evaluate/configs/default/
   - `metadata`: A dictionary with the following fields:
 
     - `version`: Version of the dataset.
-    - `format`: Currently, `csv`, `jsonl` or `json`.
+    - `format_`: Currently, `csv`, `jsonl` or `json`.
     - `source`: One of `local`, `gcs` or `custom` (for external API hosted datasets)
     - `path`: Path for the dataset, for instance, path on cloud storage.
 
@@ -115,7 +105,7 @@ my_dataset:
             - B
             - C
     metadata:
-        format: csv
+        format_: csv
         source: gcs
         path: gs://path/to/dataset/file.csv
         version: 'test'
@@ -125,13 +115,13 @@ my_dataset:
 
 Adding a custom (API sourced) dataset requires some additional code changes:
 
-- Subclass `CustomDataset` class from [voiceai/nlp/llm_evaluate/datasets/custom_dataset.py](voiceai/nlp/llm_evaluate/datasets/custom_dataset.py)
+- Subclass `CustomDataset` class from [llm_evaluate/datasets/custom_dataset.py](llm_evaluate/datasets/custom_dataset.py)
 - Implement the required `load_all()` method.
 - For more details, look at existing examples for [extensions](extensions/datasets/).
 
 ### Creating a benchmark
 
-Update [configs/default/benchmarks.yaml](voiceai/nlp/llm_evaluate/configs/default/benchmarks.yaml) with the following:
+Update [configs/default/benchmarks.yaml](llm_evaluate/configs/default/benchmarks.yaml) with the following:
 
 - Create a new entry in the benchmarks list.
 - Fill the mandatory fields:
@@ -165,9 +155,9 @@ my_benchmark:
 
 Adding a parser requires a code change. Basically:
 
-- Subclass the `Parser` class [voiceai/nlp/llm_evaluate/parsers/parser.py](voiceai/nlp/llm_evaluate/parsers/parser.py).
+- Subclass the `Parser` class [llm_evaluate/parsers/parser.py](llm_evaluate/parsers/parser.py).
 - Implement the `parse()` method.
-- For examples, look at [default_parser.py](voiceai/nlp/llm_evaluate/parsers/default_parser.py) and [keyword_parser.py](voiceai/nlp/llm_evaluate/parsers/keyword_parser.py)
+- For examples, look at [default_parser.py](llm_evaluate/parsers/default_parser.py) and [keyword_parser.py](llm_evaluate/parsers/keyword_parser.py)
 
 ### Adding a custom metric
 
@@ -218,11 +208,11 @@ There are 4 basic commands right now:
 
 ```
 
-Example using [flan-t5-xxl](./voiceai/nlp/llm_evaluate/configs/custom/flan-t5-xxl.yaml) with the model binaries stored locally at `~/data/models/flan-t5-xxl`:
+Example using [flan-t5-xxl](./llm_evaluate/configs/custom/flan-t5-xxl.yaml) with the model binaries stored locally at `~/data/models/flan-t5-xxl`:
 
 ```{console}
 
-    $ llm-evaluate benchmark voiceai/nlp/llm_evaluate/configs/custom/flan-t5-xxl.yaml --benchmark internal --run-name test --max-samples 10
+    $ llm-evaluate benchmark llm_evaluate/configs/custom/flan-t5-xxl.yaml --benchmark internal --run-name test --max-samples 10
 
     Metrics
     -------
@@ -281,11 +271,11 @@ Outputs:
     ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-Example: Run the stock [google/flan-t5-small](./voiceai/nlp/llm_evaluate/configs/custom/flan-t5-small.yaml) model with customizations in the configuration profile:
+Example: Run the stock [google/flan-t5-small](./llm_evaluate/configs/custom/flan-t5-small.yaml) model with customizations in the configuration profile:
 
 ```{console}
 
-    $ llm-evaluate stats-runtime voiceai/nlp/llm_evaluate/configs/custom/flan-t5-small.yaml
+    $ llm-evaluate stats-runtime llm_evaluate/configs/custom/flan-t5-small.yaml
     INFO:root:Measuring load times...
     INFO:root:Measuring inference times...
     100%|█████████████████████████████████████████████████████████████████████████████████████████| 20/20 [04:03<00:00, 12.17s/it]
@@ -350,7 +340,7 @@ Example: Run the stock [google/flan-t5-small](./voiceai/nlp/llm_evaluate/configs
     ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-Example: Run LLama2-Chat optimized using Llama.cpp library (stored locally at `~/data/models/llama2-cpp`) [llama2-cpp.yaml](voiceai/nlp/llm_evaluate/configs/custom/llama2-cpp.yaml) model with customizations in the configuration profile:
+Example: Run LLama2-Chat optimized using Llama.cpp library (stored locally at `~/data/models/llama2-cpp`) [llama2-cpp.yaml](llm_evaluate/configs/custom/llama2-cpp.yaml) model with customizations in the configuration profile:
 
 ```{console}
 

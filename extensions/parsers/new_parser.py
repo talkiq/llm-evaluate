@@ -1,8 +1,7 @@
-from typing import Any
+from llm_evaluate.parsers import Parser
 
-from voiceai.nlp.llm_evaluate.parsers import Parser
 
 class NewParser(Parser):
-    def parse(self, prompt: str, output: Any) -> str:
+    def parse(self, prompt: str, output: str) -> str:
         # do any processsing here
         return output

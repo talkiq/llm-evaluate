@@ -1,13 +1,9 @@
 [tool.poetry]
-name = "voiceai-nlp-llm-evaluate"
+name = "llm-evaluate"
 version = "0.0.1"
 description = ""
 authors = ["Harsh Saini <harshsaini90@gmail.com>"]
 readme = "README.md"
-
-packages = [
-    { include = "voiceai" },
-]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
@@ -60,7 +56,7 @@ ipywidgets = ">=8.1.2,<9.0.0"
 addopts = "-Werror"
 
 [tool.poetry.scripts]
-llm-evaluate = 'voiceai.nlp.llm_evaluate.cli:main'
+llm-evaluate = 'llm_evaluate.cli:main'
 
 [build-system]
 requires = ["poetry-core"]

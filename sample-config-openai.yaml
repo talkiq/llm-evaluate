@@ -1,4 +1,4 @@
-# defaults are from voiceai/nlp/llm_evaluate/configs/*.yaml
+# defaults are from llm_evaluate/configs/*.yaml
 defaults:
 - configs@benchmarks: benchmarks
 - configs@datasets: datasets
