@@ -1,0 +1,169 @@
+mmlu:
+  tasks:
+    mmlu:
+      task_type: classification
+      labels:
+      - A
+      - B
+      - C
+      - D
+      model_output_parser: KeywordParser
+  column_input: prompt
+  column_reference: target
+  description: Modified MMLU dataset from HuggingFace
+  metadata:
+    source: custom
+    loader_classname: MMLU
+    loader_filename: evaluate
+    n_shots: 5
+
+bbh:
+  tasks:
+    bbh:
+      task_type: classification
+      model_output_parser: KeywordParser
+  column_input: prompt
+  column_reference: target
+  description: Modified BBH dataset from HuggingFace
+  metadata:
+    source: custom
+    loader_classname: BBH
+    loader_filename: evaluate
+    n_shots: 5
+
+demo-random-generation:
+  tasks:
+    random-generation-prompts:
+      task_type: generation
+  column_input: prompt
+  description: Dataset for runtime inference stat measurement
+  metadata:
+    source: local
+    data:
+      - prompt: How to get to Vancouver from Seattle?
+      - prompt: Generate 3 male names in a list.
+      - prompt: Convert 4.33 x 10 to scientific notation.
+      - prompt: Suggest a vegetarian breakfast menu.
+      - prompt: What is the difference between vegetarian and vegan food?
+      - prompt: Generate an example of an artificial intelligence use case.
+      - prompt: Tell me five words that rhyme with 'shock'.
+      - prompt: List all Canadian provinces in alphabetical order.
+      - prompt: Given two sentences, find the most appropriate transition word to make the sentences flow smoothly.\nThe house was empty. The furniture was missing.
+      - prompt: |
+          Provide a list of action items from the following conversation.
+
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+      - prompt: |
+          Provide a concise summary of the following conversation.
+
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+      - prompt: |
+          Provide a concise summary of the following conversation.
+
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+          John: Hi Alice, how are you?
+          Alice: I am good, how about yourself?
+          John: Good good. Hey, I wanted to know if the ticket number 55555 had been resolved?
+          Alice: Let me check that for you. Please hold on.
+          John: Okay.
+          Alice: Thanks for waiting, John. Looks like the team was able address the issue with the internet. It should work now.
+          John: Thanks!
+
+demo-chat:
+  tasks:
+    random-questions:
+      task_type: generation
+  column_input: prompt
+  column_reference: response
+  description: Dataset for random generative tasks (single)
+  metadata:
+    source: local
+    data:
+    - prompt: How to get to Vancouver from Seattle?
+      response: Take a plane, bus, train or car.
+    - prompt: Generate 3 male names in a list.
+      response: One, Two, Three
+    - prompt: Convert 4.33 x 10 to scientific notation.
+      response: 4.33e2
+
+demo-classification:
+  tasks:
+    random-mcq:
+      task_type: classification
+      model_output_parser: KeywordParser
+      labels:
+      - A
+      - B
+      - C
+      - D
+      - E
+      none_value: E
+  column_input: prompt
+  column_reference: response
+  description: Dataset for random generative tasks (numeric reference)
+  metadata:
+    source: local
+    data:
+    - prompt: |
+        Pick the correct answer for the following question:
+        1 + 1 = ?
+        A. 0
+        B. 1
+        C. 2
+        D. 3
+      response: C
+    - prompt: |
+        Answer the following multiple choice question:
+        2 + 2 = ?
+        A. 1
+        B. 2
+        C. 3
+        D. 4
+      response: D
+    - prompt: |
+        Select the correct response for the following multiple choice question:
+        1 + 2 = ?
+        A. 1
+        B. 2
+        C. 3
+        D. 4
+      response: C
