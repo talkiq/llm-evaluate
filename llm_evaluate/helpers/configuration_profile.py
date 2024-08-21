@@ -2,7 +2,6 @@ import enum
 import logging
 import os
 import pathlib
-from typing import Dict
 
 from ..datasets.spec import DatasetSpec
 from ..metrics import MetricSpec
@@ -50,7 +49,8 @@ class ConfigurationProfile:
                 logging.debug(
                     'extensions for %s available at %s',
                     type_.value,
-                    path)
+                    path,
+                )
 
         self.parsers = parsers
         self.benchmarks = benchmarks

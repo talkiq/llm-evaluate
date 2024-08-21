@@ -57,7 +57,7 @@ class LlamaCpp(Model):
         for arg in _model_load_args:
             if arg not in {
                 'n_ctx', 'n_gqa', 'n_gpu_layers', 'n_threads',
-                'flash_attn',  # for Qwen2 otherwise gibberish output
+                'flash_attn',
             }:
                 logging.warning(
                     'model load arg is not supported by LLamaCpp: %s', arg,

@@ -13,9 +13,6 @@ class PeftModel(AutoClassModel):
     ) -> peft.PeftModel:
         peft_path = os.path.expanduser(load_kwargs.pop('peft_path'))
 
-        # TODO: if loading a already quantized model file (e.g., saved by
-        #  bitsandbytes), no need to provide the
-        #  quantization_config (Jun 9, 2024).
         base_model = AutoClassModel._load_pretrained_model(
             class_name, model_or_path, **load_kwargs,
         )

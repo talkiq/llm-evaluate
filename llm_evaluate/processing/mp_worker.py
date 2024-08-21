@@ -36,12 +36,6 @@ def init_worker(
     # for sending tokenized input vectors (torch device_id re-mapped)
     torch_device = 'cuda:0'
 
-    # the following can bypass the CUDA_VISIBLE_DEVICES issue if needed
-    # model_load_args['max_memory'] = {
-    #    i: f'{int(torch.cuda.get_device_properties(i).total_memory
-    #               /1024/1024)}MB'
-    #    for i in device_ids}
-
     model_obj = load_model(spec=model_spec, extensions_path=extensions_path)
 
 
@@ -53,21 +47,6 @@ def worker(runner_obj: Any, batch: Any, model_kwargs: Any) -> Any:
 
     global model_obj  # pylint: disable=global-variable-not-assigned
     global torch_device  # pylint: disable=global-variable-not-assigned
-
-    # If not defined, Doesn't print any error but just silently
-    # proceeds with the next task only shown when Command+C,
-    # as in concurrent.futures.process._RemoteTraceback
-    # model_kwargs = {
-    #     'max_new_tokens': 700,
-    #     'num_beams': 2,
-    #     'do_sample': False,
-    #     'top_p': 1.0,
-    # }
-
-    # Inference
-    # if model_obj.tokenizer._tokenizer.pad_token is None:
-    #     model_obj.tokenizer._tokenizer.pad_token = \
-    #       model_obj.tokenizer._tokenizer.eos_token
 
     prompt_inputs = model_obj.preprocess(
         inputs=list(inputs),
