@@ -124,9 +124,8 @@ def _benchmark(
         # make sure all are valid
         assert all(torch.cuda.get_device_name(i) for i in visible_gpu_devices)
         assert 0 <= mp_gpu_workers <= len(visible_gpu_devices), (
-            f'mp_gpu_workers must be <= # visible GPUs ({
-                len(visible_gpu_devices)
-            })'
+            'mp_gpu_workers must be <= # visible GPUs ('
+            f'{len(visible_gpu_devices)})'
         )
 
         with multiprocessing.Manager() as manager:

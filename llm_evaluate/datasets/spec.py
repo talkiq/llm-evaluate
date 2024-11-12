@@ -49,20 +49,20 @@ class DatasetMetadata:
 
 @dataclass(kw_only=True)
 class GcsDatasetMetadata(DatasetMetadata):
-    format_: str
+    data_format: str
     path: str
 
     def load_data(
         self,
         _extensions_filepath: pathlib.Path | None = None,
     ) -> pandas.DataFrame:
-        if self.format_ == FileFormat.CSV.value:
+        if self.data_format == FileFormat.CSV.value:
             return pandas.read_csv(self.path)
-        if self.format_ == FileFormat.JSON.value:
+        if self.data_format == FileFormat.JSON.value:
             return pandas.read_json(self.path, orient='records')
-        if self.format_ == FileFormat.JSONL.value:
+        if self.data_format == FileFormat.JSONL.value:
             return pandas.read_json(self.path, orient='records', lines=True)
-        raise ValueError(f'Unknown format: {self.format_}')
+        raise ValueError(f'Unknown format: {self.data_format}')
 
 
 @dataclass(kw_only=True)
@@ -89,7 +89,7 @@ class CustomDatasetMetadata(DatasetMetadata):
 
 @dataclass(kw_only=True)
 class LocalDatasetMetadata(GcsDatasetMetadata):
-    format_: str | None = None
+    data_format: str | None = None
     path: str | None = None
     data: list[dict[str, str]] = field(default_factory=list)
 
